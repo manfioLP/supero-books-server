@@ -20,7 +20,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-/ DB connection string, if local use localhost below
+// DB connection string, if local use localhost below
 // const connectionString = "mongodb://localhost:27017"
 var dbPwd = utils.GetEnvVariable("DB_PASSWORD")
 var dbUsername = utils.GetEnvVariable("DB_USERNAME")
