@@ -1,8 +1,7 @@
 package models
-import "go.mongodb.org/mongo-driver/bson/primitive"
 type Book struct {
 
-	ID     primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	ID     string `json:"_id,omitempty" bson:"_id,omitempty"`
 	Title   string             `json:"title" validate:"required,min=2,max=100"`
 	ISBN   string             `json:"ISBN" validate:"required,min=13,max=13"`
 	Author   string             `json:"author,omitempty" validate:"required,min=2,max=100"`
@@ -13,5 +12,20 @@ type Book struct {
 	Length int32               `json:"length,omitempty" validate:"gte=0,lte=10000"`
 	Width int32               `json:"width,omitempty" validate:"gte=0,lte=10000"`
 
+}
+
+type Answer struct {
+	Ok bool `json:"ok"`
+	Errors []string `json:"errors,omitempty"`
+	Data *Book `json:"data,omitempty"`
+}
+
+type GetAnswer struct {
+	Ok bool `json:"ok"`
+	Errors []string `json:"errors,omitempty"`
+	Data []Book `json:"data,omitempty"`
+	Page int64 `json:"page"`
+	PerPage int64 `json:"perPage"`
+	Total int64 `json:"total"`
 }
 
