@@ -8,7 +8,7 @@ import (
 )
 
 // load .env file
-var err = godotenv.Load("./server/.env")
+var err = godotenv.Load(".env")
 
 
 func GetEnvVariable(key string) string {
