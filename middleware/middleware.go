@@ -63,11 +63,11 @@ func init() {
 // DB Functions - CRUDDING
 
 // get all books
-func GetAllBooks(w *http.ResponseWriter, r *http.Request) {
-	(*w).Header().Set("Content-Type", "application/x-www-form-urlencoded")
-	(*w).Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
-	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+func GetAllBooks(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	page, limit := utils.Pagination(r)
 	filter := utils.Filter(r)
@@ -82,14 +82,14 @@ func GetAllBooks(w *http.ResponseWriter, r *http.Request) {
 		PerPage: paginationInfo.PerPage,
 
 	}
-	json.NewEncoder(*w).Encode(answer)
+	json.NewEncoder(w).Encode(answer)
 }
 
-func RegisterBook(w *http.ResponseWriter, r *http.Request) {
-	(*w).Header().Set("Content-Type", "application/x-www-form-urlencoded")
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
-	(*w).Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
-	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+func RegisterBook(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 
 	var book models.Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
@@ -110,11 +110,11 @@ func RegisterBook(w *http.ResponseWriter, r *http.Request) {
 			Errors: errs,
 		}
 		fmt.Println(errs)
-		(*w).WriteHeader(400)
+		w.WriteHeader(400)
 	} else {
 		book.ID = book.ISBN
 		if _, insertError := insertBook(book); insertError != "" {
-			(*w).WriteHeader(409)
+			w.WriteHeader(409)
 			answer = models.Answer{
 				Ok: false,
 				Errors: append(errs, insertError),
@@ -130,18 +130,18 @@ func RegisterBook(w *http.ResponseWriter, r *http.Request) {
 
 	}
 
-	json.NewEncoder(*w).Encode(answer)
+	json.NewEncoder(w).Encode(answer)
 }
 
-func GetBook(w *http.ResponseWriter, r *http.Request) {
-	(*w).Header().Set("Content-Type", "application/x-www-form-urlencoded")
-	(*w).Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
-	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+func GetBook(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	params := mux.Vars(r)
 	book := getBook(params["ISBN"])
-	json.NewEncoder(*w).Encode(book)
+	json.NewEncoder(w).Encode(book)
 }
 
 func DeleteBook (w http.ResponseWriter, r *http.Request) {
