@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/handlers"
 )
 
 func main() {
@@ -16,5 +15,5 @@ func main() {
 
 	fmt.Println("Starting Server on port " + port + "....")
 
-	log.Fatal(http.ListenAndServe(":" + port, handlers.CORS()(r)))
+	log.Fatal(http.ListenAndServe(":" + port, r))
 }
