@@ -64,7 +64,8 @@ func init() {
 
 // get all books
 func GetAllBooks(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	page, limit := utils.Pagination(r)
@@ -84,9 +85,9 @@ func GetAllBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 func RegisterBook(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	var book models.Book
 	_ = json.NewDecoder(r.Body).Decode(&book)
@@ -132,6 +133,7 @@ func RegisterBook(w http.ResponseWriter, r *http.Request) {
 
 func GetBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	params := mux.Vars(r)
@@ -142,7 +144,7 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 func DeleteBook (w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "DELETE")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	params := mux.Vars(r)
@@ -153,6 +155,7 @@ func DeleteBook (w http.ResponseWriter, r *http.Request) {
 
 func getAllBooks(limit int, page int, filter bson.M) ([]models.Book, PaginationData) {
 
+	// TODO: add sorting by year
 
 	projection := bson.D{
 		{"title", 1},
