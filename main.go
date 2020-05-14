@@ -20,6 +20,6 @@ func main() {
 	log.Fatal(http.ListenAndServe(":" + port, handlers.CORS(
 		handlers.AllowedOrigins([]string{"*"}),
 		handlers.AllowedMethods([]string{"OPTIONS", "GET", "POST"}),
-		handlers.AllowedHeaders([]string{"Content-Type"}),
+		handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
 	)(r)))
 }
