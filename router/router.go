@@ -2,14 +2,8 @@ package router
 
 import (
 	"../middleware"
-	"fmt"
 	"github.com/gorilla/mux"
-	"net/http"
 )
-
-func printBrabo(http.ResponseWriter, *http.Request) {
-	fmt.Println("braboooooooooo")
-}
 
 func Router() *mux.Router {
 

@@ -16,5 +16,10 @@ func main() {
 
 	fmt.Println("Starting Server on port " + port + "....")
 
-	log.Fatal(http.ListenAndServe(":" + port, handlers.CORS()(r)))
+
+	log.Fatal(http.ListenAndServe(":" + port, handlers.CORS(
+		handlers.AllowedOrigins([]string{"*"}),
+		handlers.AllowedMethods([]string{"POST"}),
+		handlers.AllowedHeaders([]string{"Content-Type", "X-Requested-With"}),
+	)(r)))
 }
